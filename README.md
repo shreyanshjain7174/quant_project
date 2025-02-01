@@ -4,7 +4,7 @@
 This project implements a **Python-based trade reconciliation system** that:
 - Ingests **client orders** from an SQLite database (`trades.db`).
 - Processes **trade execution files** from brokers (stored as `.eml` files with Excel attachments).
-- Reconciles trades by matching **symbol, date, and quantity**.
+- Reconciles trades by matching **Ticker, ISIN, and Quantity**.
 - Handles **partial matches, excess trades, and pending orders**.
 - Computes brokerage, STT, and total trade costs.
 - Stores results in **SQLite** and generates **CSV reports**.
@@ -36,48 +36,22 @@ Ensure you have the following installed:
   ```
 
 ### Database Schema (`trades.db`)
-The database consists of the following tables:
-1. **client_orders**:
+The database consists of the following table:
+1. **trades**:
    | Column      | Type       | Description |
    |------------|-----------|-------------|
-   | order_id   | TEXT       | Unique order identifier |
-   | client_id  | TEXT       | Client identifier |
-   | symbol     | TEXT       | Stock symbol |
-   | quantity   | INTEGER    | Order quantity |
-   | order_price| FLOAT      | Price per unit |
-   | order_date | DATE       | Order placement date |
-
-2. **broker_trades**:
-   | Column                      | Type   | Description |
-   |-----------------------------|--------|-------------|
-   | Deal Date                   | DATE   | Execution date |
-   | Party Code/SEBI Regn Code    | TEXT   | Broker code |
-   | Instrument ISIN              | TEXT   | Security ISIN |
-   | Buy/Sell Flag                | TEXT   | B for Buy, S for Sell |
-   | Quantity                     | INTEGER | Executed quantity |
-   | Cost                         | FLOAT  | Cost per unit |
-   | Net Amount                   | FLOAT  | Total trade amount |
-   | Brokerage Amount              | FLOAT  | Brokerage cost |
-   | Settlement Date               | DATE   | Trade settlement date |
-   | STT                          | FLOAT  | Securities Transaction Tax |
-   | Exchange Code                 | TEXT   | Exchange identifier |
-   | Depository Code               | TEXT   | Depository identifier |
-
-3. **reconciliation_results**:
-   Stores matched trades with allocated costs and quantity.
-
-4. **unmatched_orders**:
-   Stores client orders that couldn't be fulfilled by broker trades.
-
-5. **broker_excess**:
-   Tracks excess broker trades beyond client requirements.
+   | UCC        | TEXT      | Unique Client Code |
+   | Ticker     | TEXT      | Stock Ticker |
+   | ISIN       | TEXT      | Instrument ISIN |
+   | Direction  | TEXT      | Buy/Sell Flag |
+   | Quantity   | INTEGER   | Order Quantity |
 
 ## Execution
 ### Step 1: Extract and Parse Data
 ```bash
 python extract_trades.py
 ```
-- Reads **client orders** from `trades.db`.
+- Reads **client orders** from `trades.db` (now the `trades` table).
 - Extracts **trade execution files** from `.eml` attachments.
 - Stores broker trades in `broker_trades` table.
 
@@ -121,6 +95,6 @@ Alternatively, schedule it:
 - **Multiple Brokers**: Orders are allocated proportionally based on broker execution quantity.
 - **Slippage Calculation**:
   ```python
-  execution_slippage = order_price - (Net Amount / Quantity)
+  execution_slippage = (Net Amount / Quantity)
   ```
 
