@@ -98,3 +98,41 @@ Alternatively, schedule it:
   execution_slippage = (Net Amount / Quantity)
   ```
 
+## Installation & Setup for FastApi branch
+### 1️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2️⃣ Set Up Configuration
+Modify `config/settings.py` with your email credentials and database details.
+
+### 3️⃣ Run the Flask API
+Start the Flask server to enable live execution:
+```bash
+python app.py
+```
+
+### 4️⃣ Trigger Trade Reconciliation via API
+Use `curl` or Postman to trigger reconciliation on demand:
+```bash
+curl -X POST http://localhost:4000/run_reconciliation
+```
+
+### 5️⃣ Verify Reports
+After execution, reports will be generated in the `reports/` directory:
+```bash
+ls -lh reports/
+```
+
+### 6️⃣ Check Flask API Logs
+Logs will be stored in the `logs/` directory:
+```bash
+tail -f logs/flask_api.log
+```
+
+## Running the Full Workflow Manually
+If you want to execute the full trade reconciliation process without the API:
+```bash
+python scripts/run_reconciliation.py
+```

@@ -6,3 +6,12 @@ trades.db
 reports/broker_summary.csv
 reports/matched_trades.csv
 test_tb.py
+scripts/__pycache__/__init__.cpython-310.pyc
+scripts/__pycache__/email_fetcher.cpython-310.pyc
+scripts/__pycache__/extract_trades.cpython-310.pyc
+scripts/__pycache__/generate_reports.cpython-310.pyc
+scripts/__pycache__/reconcile_trades.cpython-310.pyc
+config/__pycache__/__init__.cpython-310.pyc
+config/__pycache__/settings.cpython-310.pyc
+__pycache__/app.cpython-310.pyc
+scripts/__pycache__/broker_ranking.cpython-310.pyc
