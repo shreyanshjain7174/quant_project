@@ -2,3 +2,7 @@ __pycache__/extract_trades.cpython-310.pyc
 .DS_Store
 __pycache__/reconcile_trades.cpython-310.pyc
 __pycache__/generate_reports.cpython-310.pyc
+trades.db
+reports/broker_summary.csv
+reports/matched_trades.csv
+test_tb.py
